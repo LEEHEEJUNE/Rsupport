@@ -12,11 +12,11 @@ class fileManagement() : Auditing(){
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null    //파일 ID
 
-    @Column(length = 255)
-    var original_name: String? = null   //기존 파일 명
+    @Column(length = 255, nullable = false)
+    var original_name: String = ""  //기존 파일 명
 
-    @Column(length = 255)
-    var stored_name: String? = null   //저장 파일 명
+    @Column(length = 255, nullable = false)
+    var stored_name: String = ""  //저장 파일 명
 
     @Column(length = 500)
     var path: String? = null   //저장 경로
@@ -26,4 +26,22 @@ class fileManagement() : Auditing(){
 
     @Column(length = 100)
     var type: String? = null   //파일 타입
+
+    companion object {
+        fun create(
+            originalName: String,
+            storedName: String,
+            path: String,
+            size: Int,
+            type: String
+        ): fileManagement {
+            return fileManagement().apply {
+                this.original_name = originalName
+                this.stored_name = storedName
+                this.path = path
+                this.size = size
+                this.type = type
+            }
+        }
+    }
 }

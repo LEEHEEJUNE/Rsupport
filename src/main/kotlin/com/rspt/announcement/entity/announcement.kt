@@ -34,4 +34,25 @@ class announcement() : Auditing(){
     @Convert(converter = JsonLongListConverter::class)
     var files: MutableList<Long>?  = null  // 첨부 파일 리스트
 
+    companion object {
+        fun create(
+            title: String,
+            content: String,
+            viewCount: Int,
+            writer: String,
+            startDate: LocalDateTime,
+            endDate: LocalDateTime,
+            files: MutableList<Long>? = null
+        ): announcement {
+            return announcement().apply {
+                this.title = title
+                this.content = content
+                this.view_count = viewCount
+                this.writer = writer
+                this.start_date = startDate
+                this.end_date = endDate
+                this.files = files
+            }
+        }
+    }
 }

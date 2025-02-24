@@ -45,6 +45,9 @@ out/
 /nbdist/
 /.nb-gradle/
 
+### Uploads ###
+uploads/
+
 ### VS Code ###
 .vscode/
 

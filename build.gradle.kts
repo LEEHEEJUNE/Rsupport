@@ -22,26 +22,25 @@ repositories {
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-
+	implementation("org.springframework.boot:spring-boot-starter-security")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-
+	implementation("io.jsonwebtoken:jjwt-api:0.11.5")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.22")
 	implementation("org.jetbrains.kotlin:kotlin-reflect:1.9.22")
-
 	implementation("org.hibernate:hibernate-envers:6.4.2.Final")
-
 	implementation("com.google.code.gson:gson:2.10.1")
-
 	implementation("org.slf4j:slf4j-api:2.0.9")
 	implementation("ch.qos.logback:logback-classic:1.5.16")
+
 
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.jetbrains.kotlin:kotlin-test-junit5:1.9.22")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
-	// MySQL Connector/J (DB 연결)
 	runtimeOnly("mysql:mysql-connector-java:8.0.33")
+	runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.5")
+	runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.5")
 }
 
 kotlin {

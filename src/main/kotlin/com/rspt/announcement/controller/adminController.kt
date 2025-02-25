@@ -20,6 +20,16 @@ class adminController(
     private val adminService: adminService
 ) {
     /**
+     * 공지사항 상세 조회
+     * */
+    @GetMapping("/anmt/{anmtId}")
+    fun getAnnouncementDetail(
+        @PathVariable anmtId: Long,
+    ) : ResponseEntity<responseDto.apiResponse<anmtDto.announcement>>{
+        return ResponseEntity(adminService.getAnnoucementDetail(anmtId), HttpStatus.OK)
+    }
+
+    /**
      * 공지사항 리스트 조회
      * */
     @GetMapping("/anmts")

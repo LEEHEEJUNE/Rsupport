@@ -23,7 +23,9 @@ class anmtDto {
         var writer:String? = null,  //작성자
         var start_date: String? = null,  //공지 시작
         var end_date: String? = null,    //공지 마감
-        var files:List<fileDto.file>? = null
+        var files:MutableList<fileDto.file>? = mutableListOf(),
+        var view_count:Int? = null,  //조회수
+        var create_at: String? = null   //등록일
     )
 
     data class responseList(

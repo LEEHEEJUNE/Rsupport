@@ -2,6 +2,7 @@ package com.rspt.announcement.service
 
 import com.rspt.announcement.common.dto.responseDto
 import com.rspt.announcement.dto.anmtDto
+import com.rspt.announcement.dto.fileDto
 import com.rspt.announcement.entity.Announcement
 import com.rspt.announcement.entity.FileManagement
 import com.rspt.announcement.infrastructure.announcementRepository
@@ -24,8 +25,47 @@ class adminService(
 ) {
 
     /**
+     * 공지사항 상세 조회
+     * */
+    fun getAnnoucementDetail(anmtId:Long):responseDto.apiResponse<anmtDto.announcement>{
+        val resultDto = responseDto.apiResponse(result = anmtDto.announcement())
+
+        try{
+            val anmtEntity = announcementRepository.getReferenceById(anmtId)
+
+            resultDto.result!!.id = anmtEntity.id
+            resultDto.result!!.writer = anmtEntity.writer
+            resultDto.result!!.start_date = anmtEntity.start_date?.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))
+            resultDto.result!!.end_date = anmtEntity.end_date?.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))
+            resultDto.result!!.content = anmtEntity.content
+            resultDto.result!!.title = anmtEntity.title
+
+            anmtEntity.files?.let { fileIds ->
+                fileIds.forEach { fileId ->
+                    val fileEntity = fileManagementRepository.getReferenceById(fileId)
+                    val tmpDto: fileDto.file = fileDto.file(
+                        id = fileEntity.id!!,
+                        originalName = fileEntity.original_name,
+                        storedName = fileEntity.stored_name,
+                        path = fileEntity.path!!,
+                        fileSize = fileEntity.size!!.toLong(),
+                        fileType = fileEntity.type!!
+                    )
+                    resultDto.result!!.files!!.add(tmpDto)
+                }
+            }
+
+            resultDto.message="Successful retrieval"
+        }catch(e:Exception){
+            log.error("Announcement detail API Error: {}", e.message)
+        }
+
+        return resultDto
+    }
+
+    /**
      * 공지사항 리스트 조회
-     * 전체 공지사항 리스트가 조회된다.
+     * 전체 공지사항 리스트가 요청 된 페이징 값에 의해 조회된다.
      * */
 
     fun getAnnoucements(pageRequest: PageRequest):responseDto.apiResponse<anmtDto.responseList>{

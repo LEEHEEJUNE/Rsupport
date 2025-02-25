@@ -15,19 +15,17 @@ class securityConfig(val tokenProvider: jwtTokenProvider) {
     @Bean
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
         http
-            // CSRF 비활성화: lambda DSL 사용
             .csrf { csrf -> csrf.disable() }
-            // Stateless 세션 정책 적용
             .sessionManagement { session ->
                 session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             }
-            // 요청 권한 설정 ("/auth/**"는 인증 없이 접근 가능)
+            // 요청 권한 설정 ("/auth/login"는 인증 없이 접근 가능)
             .authorizeHttpRequests { authz ->
                 authz
-                    .requestMatchers("/auth/login").permitAll()
+                    .requestMatchers("/auth/login", "/main/anmt/**").permitAll()
                     .anyRequest().authenticated()
             }
-            // JWT 인증 필터 추가 (UsernamePasswordAuthenticationFilter 전에 실행)
+
             .addFilterBefore(
                 JwtAuthenticationFilter(tokenProvider),
                 UsernamePasswordAuthenticationFilter::class.java

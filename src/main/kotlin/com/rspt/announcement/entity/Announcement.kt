@@ -7,7 +7,7 @@ import java.time.LocalDateTime
 
 @Entity
 @Table(name = "announcement")
-class announcement() : Auditing(){
+class Announcement() : Auditing(){
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null    //공지사항 ID
@@ -43,8 +43,8 @@ class announcement() : Auditing(){
             startDate: LocalDateTime,
             endDate: LocalDateTime,
             files: MutableList<Long>? = null
-        ): announcement {
-            return announcement().apply {
+        ): Announcement {
+            return Announcement().apply {
                 this.title = title
                 this.content = content
                 this.view_count = viewCount

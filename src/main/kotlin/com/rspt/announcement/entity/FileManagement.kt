@@ -7,7 +7,7 @@ import jakarta.persistence.*
 
 @Entity
 @Table(name = "file_management")
-class fileManagement() : Auditing(){
+class FileManagement() : Auditing(){
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null    //파일 ID
@@ -34,8 +34,8 @@ class fileManagement() : Auditing(){
             path: String,
             size: Int,
             type: String
-        ): fileManagement {
-            return fileManagement().apply {
+        ): FileManagement {
+            return FileManagement().apply {
                 this.original_name = originalName
                 this.stored_name = storedName
                 this.path = path

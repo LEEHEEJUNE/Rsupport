@@ -38,4 +38,10 @@ class adminController(
                     files = files
         )), HttpStatus.OK)
     }
+
+    @DeleteMapping("/anmt/{anmtId}")
+    fun deleteAnnouncement(@PathVariable anmtId: Long):ResponseEntity<responseDto.apiResponse<Nothing>> {
+        return ResponseEntity(
+            adminService.deleteAnnouncement(anmtId), HttpStatus.OK)
+    }
 }
